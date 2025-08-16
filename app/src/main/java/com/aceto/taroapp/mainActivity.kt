@@ -1,5 +1,5 @@
 package com.aceto.taroapp
-
+// 테스트 주석 추가
 // 타로카드 데이터 클래스
 data class TarotCard(
     val name: String,
