@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.aceto.tarotapp"
+    namespace = "com.taropicker"
     compileSdk = 36
 
     defaultConfig {
