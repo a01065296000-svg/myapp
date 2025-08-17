@@ -49,28 +49,28 @@ data class TarotReading(
 object TarotDeck {
     // 메이저 아르카나 22장 (실제 타로카드 그림 스타일)
     private val majorArcana = listOf(
-        TarotCard("THE FOOL", "0", "🌟🎒🐕", "새로운 시작, 순수함, 모험"),
-        TarotCard("THE MAGICIAN", "I", "🎩⚡🔮", "의지력, 창조, 능력"),
-        TarotCard("THE HIGH PRIESTESS", "II", "🌙👑📚", "직감, 신비, 잠재의식"),
-        TarotCard("THE EMPRESS", "III", "👑🌺💎", "풍요, 모성, 창조력"),
-        TarotCard("THE EMPEROR", "IV", "👑🏛️⚔️", "권위, 안정, 질서"),
-        TarotCard("THE HIEROPHANT", "V", "⛪🗝️📿", "전통, 교육, 영성"),
-        TarotCard("THE LOVERS", "VI", "💕👫🌈", "사랑, 선택, 조화"),
-        TarotCard("THE CHARIOT", "VII", "🏹🐎⚡", "의지, 승리, 통제"),
-        TarotCard("STRENGTH", "VIII", "🦁💪🌹", "힘, 용기, 인내"),
-        TarotCard("THE HERMIT", "IX", "🔦🏔️⭐", "지혜, 성찰, 고독"),
-        TarotCard("WHEEL OF FORTUNE", "X", "🎡⚡🔄", "운명, 변화, 순환"),
-        TarotCard("JUSTICE", "XI", "⚖️🗡️👁️", "정의, 균형, 진실"),
-        TarotCard("THE HANGED MAN", "XII", "🙃🌳💧", "희생, 깨달음, 기다림"),
-        TarotCard("DEATH", "XIII", "💀🌹🦋", "변화, 종료, 재생"),
-        TarotCard("TEMPERANCE", "XIV", "👼💧🌈", "절제, 조화, 균형"),
-        TarotCard("THE DEVIL", "XV", "😈🔗🔥", "유혹, 속박, 욕망"),
-        TarotCard("THE TOWER", "XVI", "🗼⚡💥", "파괴, 급변, 해방"),
-        TarotCard("THE STAR", "XVII", "⭐💧🕊️", "희망, 영감, 치유"),
-        TarotCard("THE MOON", "XVIII", "🌙🐺🦞", "환상, 불안, 직감"),
-        TarotCard("THE SUN", "XIX", "☀️🌻👶", "기쁨, 성공, 활력"),
-        TarotCard("JUDGEMENT", "XX", "📯👼☁️", "각성, 부활, 심판"),
-        TarotCard("THE WORLD", "XXI", "🌍💃🦅", "완성, 성취, 만족")
+        TarotCard("THE FOOL", "0", "🌟🎒🐕", "새로운 시작, 순수함, 모험", R.drawable.major_arcana_fool),
+        TarotCard("THE MAGICIAN", "I", "🎩⚡🔮", "의지력, 창조, 능력", R.drawable.major_arcana_magician),
+        TarotCard("THE HIGH PRIESTESS", "II", "🌙👑📚", "직감, 신비, 잠재의식", R.drawable.major_arcana_priestess),
+        TarotCard("THE EMPRESS", "III", "👑🌺💎", "풍요, 모성, 창조력", R.drawable.major_arcana_empress),
+        TarotCard("THE EMPEROR", "IV", "👑🏛️⚔️", "권위, 안정, 질서", R.drawable.major_arcana_emperor),
+        TarotCard("THE HIEROPHANT", "V", "⛪🗝️📿", "전통, 교육, 영성", R.drawable.major_arcana_hierophant),
+        TarotCard("THE LOVERS", "VI", "💕👫🌈", "사랑, 선택, 조화", R.drawable.major_arcana_lovers),
+        TarotCard("THE CHARIOT", "VII", "🏹🐎⚡", "의지, 승리, 통제", R.drawable.major_arcana_chariot),
+        TarotCard("STRENGTH", "VIII", "🦁💪🌹", "힘, 용기, 인내", R.drawable.major_arcana_strength),
+        TarotCard("THE HERMIT", "IX", "🔦🏔️⭐", "지혜, 성찰, 고독", R.drawable.major_arcana_hermit),
+        TarotCard("WHEEL OF FORTUNE", "X", "🎡⚡🔄", "운명, 변화, 순환", R.drawable.major_arcana_fortune),
+        TarotCard("JUSTICE", "XI", "⚖️🗡️👁️", "정의, 균형, 진실", R.drawable.major_arcana_justice),
+        TarotCard("THE HANGED MAN", "XII", "🙃🌳💧", "희생, 깨달음, 기다림", R.drawable.major_arcana_hanged),
+        TarotCard("DEATH", "XIII", "💀🌹🦋", "변화, 종료, 재생", R.drawable.major_arcana_death),
+        TarotCard("TEMPERANCE", "XIV", "👼💧🌈", "절제, 조화, 균형", R.drawable.major_arcana_temperance),
+        TarotCard("THE DEVIL", "XV", "😈🔗🔥", "유혹, 속박, 욕망", R.drawable.major_arcana_devil),
+        TarotCard("THE TOWER", "XVI", "🗼⚡💥", "파괴, 급변, 해방", R.drawable.major_arcana_tower),
+        TarotCard("THE STAR", "XVII", "⭐💧🕊️", "희망, 영감, 치유", R.drawable.major_arcana_star),
+        TarotCard("THE MOON", "XVIII", "🌙🐺🦞", "환상, 불안, 직감", R.drawable.major_arcana_moon),
+        TarotCard("THE SUN", "XIX", "☀️🌻👶", "기쁨, 성공, 활력", R.drawable.major_arcana_sun),
+        TarotCard("JUDGEMENT", "XX", "📯👼☁️", "각성, 부활, 심판", R.drawable.major_arcana_judgement),
+        TarotCard("THE WORLD", "XXI", "🌍💃🦅", "완성, 성취, 만족", R.drawable.major_arcana_world)
     )
 
     // 마이너 아르카나 56장
@@ -78,29 +78,57 @@ object TarotDeck {
         // 컵 (감정, 사랑)
         val cupsEmojis = listOf("💧", "💝", "🎉", "😔", "🏆", "👶", "🌈", "🎭", "😌", "🎪", "⚔️", "🏇", "👸", "👑")
         val cupsCards = listOf("ACE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN", "PAGE", "KNIGHT", "QUEEN", "KING")
+        val cupsImages = listOf(
+            R.drawable.minor_arcana_cups_ace, R.drawable.minor_arcana_cups_2, R.drawable.minor_arcana_cups_3,
+            R.drawable.minor_arcana_cups_4, R.drawable.minor_arcana_cups_5, R.drawable.minor_arcana_cups_6,
+            R.drawable.minor_arcana_cups_7, R.drawable.minor_arcana_cups_8, R.drawable.minor_arcana_cups_9,
+            R.drawable.minor_arcana_cups_10, R.drawable.minor_arcana_cups_page, R.drawable.minor_arcana_cups_knight,
+            R.drawable.minor_arcana_cups_queen, R.drawable.minor_arcana_cups_king
+        )
         cupsCards.forEachIndexed { index, name ->
-            add(TarotCard("$name OF CUPS", (index + 1).toString(), cupsEmojis[index], "감정과 사랑의 영역"))
+            add(TarotCard("$name OF CUPS", (index + 1).toString(), cupsEmojis[index], "감정과 사랑의 영역", cupsImages[index]))
         }
 
         // 완드 (정열, 창조)
         val wandsEmojis = listOf("🔥", "🏠", "🚢", "🎊", "⚔️", "🏆", "🛡️", "⚡", "🎯", "📦", "🧙", "🏇", "👸", "👑")
         val wandsCards = listOf("ACE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN", "PAGE", "KNIGHT", "QUEEN", "KING")
+        val wandsImages = listOf(
+            R.drawable.minor_arcana_wands_ace, R.drawable.minor_arcana_wands_2, R.drawable.minor_arcana_wands_3,
+            R.drawable.minor_arcana_wands_4, R.drawable.minor_arcana_wands_5, R.drawable.minor_arcana_wands_6,
+            R.drawable.minor_arcana_wands_7, R.drawable.minor_arcana_wands_8, R.drawable.minor_arcana_wands_9,
+            R.drawable.minor_arcana_wands_10, R.drawable.minor_arcana_wands_page, R.drawable.minor_arcana_wands_knight,
+            R.drawable.minor_arcana_wands_queen, R.drawable.minor_arcana_wands_king
+        )
         wandsCards.forEachIndexed { index, name ->
-            add(TarotCard("$name OF WANDS", (index + 1).toString(), wandsEmojis[index], "정열과 창조의 영역"))
+            add(TarotCard("$name OF WANDS", (index + 1).toString(), wandsEmojis[index], "정열과 창조의 영역", wandsImages[index]))
         }
 
         // 소드 (지성, 갈등)
         val swordsEmojis = listOf("⚔️", "🤝", "💔", "😴", "🏃", "🚤", "⚔️", "🔒", "😰", "🗡️", "🧙", "🏇", "👸", "👑")
         val swordsCards = listOf("ACE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN", "PAGE", "KNIGHT", "QUEEN", "KING")
+        val swordsImages = listOf(
+            R.drawable.minor_arcana_swords_ace, R.drawable.minor_arcana_swords_2, R.drawable.minor_arcana_swords_3,
+            R.drawable.minor_arcana_swords_4, R.drawable.minor_arcana_swords_5, R.drawable.minor_arcana_swords_6,
+            R.drawable.minor_arcana_swords_7, R.drawable.minor_arcana_swords_8, R.drawable.minor_arcana_swords_9,
+            R.drawable.minor_arcana_swords_10, R.drawable.minor_arcana_swords_page, R.drawable.minor_arcana_swords_knight,
+            R.drawable.minor_arcana_swords_queen, R.drawable.minor_arcana_swords_king
+        )
         swordsCards.forEachIndexed { index, name ->
-            add(TarotCard("$name OF SWORDS", (index + 1).toString(), swordsEmojis[index], "지성과 갈등의 영역"))
+            add(TarotCard("$name OF SWORDS", (index + 1).toString(), swordsEmojis[index], "지성과 갈등의 영역", swordsImages[index]))
         }
 
         // 펜타클 (물질, 현실)
         val pentaclesEmojis = listOf("💰", "🤹", "👷", "💵", "⛪", "🤝", "🌱", "🔨", "🏡", "💎", "🧙", "🏇", "👸", "👑")
         val pentaclesCards = listOf("ACE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN", "PAGE", "KNIGHT", "QUEEN", "KING")
+        val pentaclesImages = listOf(
+            R.drawable.minor_arcana_pentacles_ace, R.drawable.minor_arcana_pentacles_2, R.drawable.minor_arcana_pentacles_3,
+            R.drawable.minor_arcana_pentacles_4, R.drawable.minor_arcana_pentacles_5, R.drawable.minor_arcana_pentacles_6,
+            R.drawable.minor_arcana_pentacles_7, R.drawable.minor_arcana_pentacles_8, R.drawable.minor_arcana_pentacles_9,
+            R.drawable.minor_arcana_pentacles_10, R.drawable.minor_arcana_pentacles_page, R.drawable.minor_arcana_pentacles_knight,
+            R.drawable.minor_arcana_pentacles_queen, R.drawable.minor_arcana_pentacles_king
+        )
         pentaclesCards.forEachIndexed { index, name ->
-            add(TarotCard("$name OF PENTACLES", (index + 1).toString(), pentaclesEmojis[index], "물질과 현실의 영역"))
+            add(TarotCard("$name OF PENTACLES", (index + 1).toString(), pentaclesEmojis[index], "물질과 현실의 영역", pentaclesImages[index]))
         }
     }
 
@@ -506,115 +534,140 @@ fun TarotCardView(
                     )
             )
 
-            // 프리미엄 모드: 나중에 이미지 추가할 예정
-            // 현재는 무료 버전과 동일하게 이모지 표시
-
-            // 왼쪽 위 모서리 숫자
-            Text(
-                text = card.number,
-                fontSize = numberSize,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF8B4513),
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(8.dp)
-            )
-
-            // 오른쪽 아래 모서리 숫자 (뒤집어서)
-            Text(
-                text = card.number,
-                fontSize = numberSize,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF8B4513),
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(8.dp)
-                    .rotate(180f)
-            )
-
-            // 중앙 - 거대한 타로카드 이모지
-            Column(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                // 타로카드 메인 이모지 (매우 크게)
-                Text(
-                    text = when(card.name) {
-                        "THE SUN" -> "☀️"
-                        "THE FOOL" -> "🃏"
-                        "THE MAGICIAN" -> "🧙‍♂️"
-                        "THE HIGH PRIESTESS" -> "🔮"
-                        "THE EMPRESS" -> "👸"
-                        "THE EMPEROR" -> "🤴"
-                        "THE HIEROPHANT" -> "⛪"
-                        "THE LOVERS" -> "💕"
-                        "THE CHARIOT" -> "🏇"
-                        "STRENGTH" -> "🦁"
-                        "THE HERMIT" -> "🔍"
-                        "WHEEL OF FORTUNE" -> "🎡"
-                        "JUSTICE" -> "⚖️"
-                        "THE HANGED MAN" -> "🙃"
-                        "DEATH" -> "💀"
-                        "TEMPERANCE" -> "👼"
-                        "THE DEVIL" -> "😈"
-                        "THE TOWER" -> "🏰"
-                        "THE STAR" -> "⭐"
-                        "THE MOON" -> "🌙"
-                        "JUDGEMENT" -> "📯"
-                        "THE WORLD" -> "🌍"
-                        else -> when {
-                            card.name.contains("KING") -> "👑"
-                            card.name.contains("QUEEN") -> "👸"
-                            card.name.contains("KNIGHT") -> "🏇"
-                            card.name.contains("PAGE") -> "📜"
-                            card.name.contains("CUPS") -> "🏆"
-                            card.name.contains("WANDS") -> "🔥"
-                            card.name.contains("SWORDS") -> "⚔️"
-                            card.name.contains("PENTACLES") -> "💰"
-                            else -> "🌟"
-                        }
-                    },
-                    fontSize = emojiSize,
-                    color = Color.Black,
-                    textAlign = TextAlign.Center,
-                    modifier = if (card.isReversed) Modifier.rotate(180f) else Modifier
+            // 프리미엄 모드: 실제 이미지 표시
+            if (isPremium && card.imageResId != null) {
+                Image(
+                    painter = painterResource(id = card.imageResId),
+                    contentDescription = card.name,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .then(if (card.isReversed) Modifier.rotate(180f) else Modifier),
+                    contentScale = ContentScale.Fit
                 )
 
-                // 장식 무늬
-                Text(
-                    text = "✦ ❈ ✦",
-                    fontSize = if (large) 20.sp else 16.sp,
-                    color = Color(0xFF8B4513),
-                    modifier = Modifier.padding(top = 8.dp)
-                )
-            }
-
-            // 하단 카드 이름
-            Column(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .padding(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+                // 카드 이름 오버레이
                 Text(
                     text = card.name,
                     fontSize = nameSize,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF8B4513),
+                    color = Color.White,
                     textAlign = TextAlign.Center,
-                    maxLines = 2
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .background(Color.Black.copy(alpha = 0.7f))
+                        .padding(4.dp)
+                        .fillMaxWidth()
+                )
+            } else {
+                // 무료 버전: 이모지 방식
+
+                // 왼쪽 위 모서리 숫자
+                Text(
+                    text = card.number,
+                    fontSize = numberSize,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF8B4513),
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(8.dp)
                 )
 
-                if (card.isReversed) {
+                // 오른쪽 아래 모서리 숫자 (뒤집어서)
+                Text(
+                    text = card.number,
+                    fontSize = numberSize,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF8B4513),
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(8.dp)
+                        .rotate(180f)
+                )
+
+                // 중앙 - 거대한 타로카드 이모지
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    // 타로카드 메인 이모지 (매우 크게)
                     Text(
-                        text = "REVERSED",
-                        fontSize = (nameSize.value - 2).sp,
-                        color = Color.Red,
-                        fontWeight = FontWeight.Bold
+                        text = when(card.name) {
+                            "THE SUN" -> "☀️"
+                            "THE FOOL" -> "🃏"
+                            "THE MAGICIAN" -> "🧙‍♂️"
+                            "THE HIGH PRIESTESS" -> "🔮"
+                            "THE EMPRESS" -> "👸"
+                            "THE EMPEROR" -> "🤴"
+                            "THE HIEROPHANT" -> "⛪"
+                            "THE LOVERS" -> "💕"
+                            "THE CHARIOT" -> "🏇"
+                            "STRENGTH" -> "🦁"
+                            "THE HERMIT" -> "🔍"
+                            "WHEEL OF FORTUNE" -> "🎡"
+                            "JUSTICE" -> "⚖️"
+                            "THE HANGED MAN" -> "🙃"
+                            "DEATH" -> "💀"
+                            "TEMPERANCE" -> "👼"
+                            "THE DEVIL" -> "😈"
+                            "THE TOWER" -> "🏰"
+                            "THE STAR" -> "⭐"
+                            "THE MOON" -> "🌙"
+                            "JUDGEMENT" -> "📯"
+                            "THE WORLD" -> "🌍"
+                            else -> when {
+                                card.name.contains("KING") -> "👑"
+                                card.name.contains("QUEEN") -> "👸"
+                                card.name.contains("KNIGHT") -> "🏇"
+                                card.name.contains("PAGE") -> "📜"
+                                card.name.contains("CUPS") -> "🏆"
+                                card.name.contains("WANDS") -> "🔥"
+                                card.name.contains("SWORDS") -> "⚔️"
+                                card.name.contains("PENTACLES") -> "💰"
+                                else -> "🌟"
+                            }
+                        },
+                        fontSize = emojiSize,
+                        color = Color.Black,
+                        textAlign = TextAlign.Center,
+                        modifier = if (card.isReversed) Modifier.rotate(180f) else Modifier
                     )
+
+                    // 장식 무늬
+                    Text(
+                        text = "✦ ❈ ✦",
+                        fontSize = if (large) 20.sp else 16.sp,
+                        color = Color(0xFF8B4513),
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                }
+
+                // 하단 카드 이름
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = card.name,
+                        fontSize = nameSize,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF8B4513),
+                        textAlign = TextAlign.Center,
+                        maxLines = 2
+                    )
+
+                    if (card.isReversed) {
+                        Text(
+                            text = "REVERSED",
+                            fontSize = (nameSize.value - 2).sp,
+                            color = Color.Red,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
                 }
             }
         }
