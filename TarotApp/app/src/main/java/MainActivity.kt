@@ -26,7 +26,13 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.zIndex
 import kotlin.random.Random
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 // 타로카드 데이터 클래스
 data class TarotCard(
@@ -34,7 +40,7 @@ data class TarotCard(
     val number: String,
     val emoji: String,
     val description: String,
-    val imageResId: Int? = null, // 이미지 리소스 ID 추가 (나중에 사용)
+    val imageResId: Int? = null,
     val isReversed: Boolean = false
 )
 
@@ -137,10 +143,9 @@ object TarotDeck {
 
     fun drawRandomCards(count: Int): List<TarotCard> {
         return allCards.shuffled().take(count).map { card ->
-            // 매번 새로운 객체를 생성해서 강제로 화면 업데이트
             card.copy(
                 isReversed = Random.nextBoolean(),
-                emoji = card.emoji // 이모지도 새로 설정
+                emoji = card.emoji
             )
         }
     }
@@ -161,7 +166,9 @@ fun TarotApp() {
     var currentReading by remember { mutableStateOf<TarotReading?>(null) }
     var readingHistory by remember { mutableStateOf<List<TarotReading>>(emptyList()) }
     var questionText by remember { mutableStateOf("") }
-    var isPremium by remember { mutableStateOf(false) }
+    var isPremiumPurchased by remember { mutableStateOf(false) } // 실제 결제 상태
+    var showPaymentDialog by remember { mutableStateOf(false) }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -174,8 +181,8 @@ fun TarotApp() {
                 onQuestionChange = { questionText = it },
                 onConfirm = { currentScreen = "select" },
                 onShowHistory = { currentScreen = "history" },
-                isPremium = isPremium,
-                onPremiumChange = { isPremium = it }
+                isPremiumPurchased = isPremiumPurchased,
+                onRequestPremium = { showPaymentDialog = true }
             )
             "select" -> SelectScreen(
                 onDrawCards = { count ->
@@ -198,7 +205,7 @@ fun TarotApp() {
                     questionText = ""
                     currentScreen = "question"
                 },
-                isPremium = isPremium
+                isPremium = isPremiumPurchased
             )
             "history" -> HistoryScreen(
                 history = readingHistory,
@@ -209,6 +216,127 @@ fun TarotApp() {
                 }
             )
         }
+
+        // 결제 다이얼로그
+        if (showPaymentDialog) {
+            PaymentDialog(
+                onDismiss = { showPaymentDialog = false },
+                onPurchaseSuccess = {
+                    isPremiumPurchased = true
+                    showPaymentDialog = false
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun PaymentDialog(
+    onDismiss: () -> Unit,
+    onPurchaseSuccess: () -> Unit
+) {
+    var isProcessing by remember { mutableStateOf(false) }
+
+    Dialog(onDismissRequest = onDismiss) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = Color(0xFF2a2d47)
+            ),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "🌟 프리미엄 업그레이드",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFFffd700)
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = "실제 타로카드 이미지와\n더 정확한 해석을 경험하세요!",
+                    fontSize = 16.sp,
+                    color = Color.White,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
+                    text = "₩3,900 (일회성 결제)",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFFffd700)
+                )
+
+                Spacer(modifier = Modifier.height(24.dp))
+
+                if (isProcessing) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        CircularProgressIndicator(
+                            color = Color(0xFFffd700)
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "결제 처리 중...",
+                            color = Color.White,
+                            fontSize = 14.sp
+                        )
+                    }
+                } else {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Button(
+                            onClick = onDismiss,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color.Gray,
+                                contentColor = Color.White
+                            )
+                        ) {
+                            Text("취소")
+                        }
+
+                        Button(
+                            onClick = {
+                                // 임시 결제 처리 시뮬레이션
+                                isProcessing = true
+                                // 2초 후 결제 완료
+                                CoroutineScope(Dispatchers.Main).launch {
+                                    delay(2000)
+                                    onPurchaseSuccess()
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFffd700),
+                                contentColor = Color.Black
+                            )
+                        ) {
+                            Text("💳 결제하기")
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(
+                    text = "※ 테스트 버전: 2초 후 자동 활성화",
+                    fontSize = 12.sp,
+                    color = Color.Gray,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
     }
 }
 
@@ -218,8 +346,8 @@ fun QuestionScreen(
     onQuestionChange: (String) -> Unit,
     onConfirm: () -> Unit,
     onShowHistory: () -> Unit,
-    isPremium: Boolean,
-    onPremiumChange: (Boolean) -> Unit
+    isPremiumPurchased: Boolean,
+    onRequestPremium: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -308,26 +436,56 @@ fun QuestionScreen(
         // 여백 (자판이 올라와도 버튼이 보이도록)
         Spacer(modifier = Modifier.weight(1f))
 
-        // 프리미엄 토글 (하단)
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+        // 프리미엄 상태 표시 (하단)
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { if (!isPremiumPurchased) onRequestPremium() },
+            colors = CardDefaults.cardColors(
+                containerColor = if (isPremiumPurchased) Color(0xFF2d5016) else Color(0xFF2a2d47)
+            ),
+            shape = RoundedCornerShape(12.dp)
         ) {
-            Text(
-                text = if (isPremium) "🌟 프리미엄 모드 (실제 타로카드)" else "⭐ 무료 모드 (이모지)",
-                color = Color.White,
-                fontSize = 16.sp
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Switch(
-                checked = isPremium,
-                onCheckedChange = onPremiumChange,
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = Color(0xFFffd700),
-                    checkedTrackColor = Color(0xFFffd700).copy(alpha = 0.5f)
-                )
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Text(
+                        text = if (isPremiumPurchased) "🌟 프리미엄 모드" else "⭐ 무료 모드",
+                        color = Color.White,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = if (isPremiumPurchased) "실제 타로카드 이미지" else "이모지 카드 (업그레이드 가능)",
+                        color = Color.Gray,
+                        fontSize = 14.sp
+                    )
+                }
+
+                if (!isPremiumPurchased) {
+                    Button(
+                        onClick = onRequestPremium,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFffd700),
+                            contentColor = Color.Black
+                        ),
+                        modifier = Modifier.height(36.dp)
+                    ) {
+                        Text("업그레이드", fontSize = 12.sp)
+                    }
+                } else {
+                    Text(
+                        text = "✅",
+                        fontSize = 24.sp,
+                        color = Color.Green
+                    )
+                }
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -429,16 +587,20 @@ fun CardsScreen(
     isPremium: Boolean = false
 ) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 16.dp)
     ) {
-        // 뒤로가기 버튼
+        // 뒤로가기 버튼 - 상단 고정
         Button(
             onClick = onBack,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF2a2d47),
                 contentColor = Color.White
             ),
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .zIndex(10f) // 다른 요소들보다 위에 표시
         ) {
             Text("← 뒤로")
         }
@@ -448,7 +610,7 @@ fun CardsScreen(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp),
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = Color(0xFF2a2d47)
                 )
@@ -462,10 +624,17 @@ fun CardsScreen(
             }
         }
 
-        // 카드 표시 - 세로 배치
-        when (reading.cards.size) {
-            1 -> SingleCardLayout(reading.cards[0], isPremium = isPremium)
-            3 -> ThreeCardVerticalLayout(reading.cards, isPremium = isPremium)
+        // 카드 표시 영역 - 남은 공간 사용
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .offset(y = (-14).dp) // 총 5mm(14dp) 위로 올리기
+                .padding(top = 16.dp) // 뒤로 버튼과의 안전 거리 확보
+        ) {
+            when (reading.cards.size) {
+                1 -> SingleCardLayout(reading.cards[0], isPremium = isPremium)
+                3 -> ThreeCardVerticalLayout(reading.cards, isPremium = isPremium)
+            }
         }
     }
 }
@@ -482,12 +651,17 @@ fun SingleCardLayout(card: TarotCard, isPremium: Boolean = false) {
 
 @Composable
 fun ThreeCardVerticalLayout(cards: List<TarotCard>, isPremium: Boolean = false) {
-    // 세로로 3장 배치 (스크롤 가능)
+    // 세로로 3장 배치 (스크롤 가능) - 모든 카드 위치 통일
     LazyColumn(
-        modifier = Modifier.fillMaxSize().offset(y = (-40).dp),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(16.dp)
+        contentPadding = PaddingValues(
+            top = 8.dp,     // 상단 여백 최소화
+            bottom = 32.dp, // 하단 여백 확보
+            start = 16.dp,
+            end = 16.dp
+        )
     ) {
         items(cards) { card ->
             TarotCardView(card, large = false, isPremium = isPremium)
@@ -503,7 +677,7 @@ fun TarotCardView(
 ) {
     val cardWidth = if (large) 300.dp else 220.dp
     val cardHeight = if (large) 450.dp else 320.dp
-    val emojiSize = if (large) 180.sp else 120.sp // 큰 이모지
+    val emojiSize = if (large) 180.sp else 120.sp
     val numberSize = if (large) 14.sp else 10.sp
     val nameSize = if (large) 12.sp else 9.sp
 
