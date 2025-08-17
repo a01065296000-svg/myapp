@@ -34,7 +34,7 @@ data class TarotCard(
     val number: String,
     val emoji: String,
     val description: String,
-    val imageResId: Int? = null, // 이미지 리소스 ID 추가
+    val imageResId: Int? = null, // 이미지 리소스 ID 추가 (나중에 사용)
     val isReversed: Boolean = false
 )
 
@@ -506,95 +506,216 @@ fun TarotCardView(
                     )
             )
 
-            // 유료 버전: 실제 타로카드 이미지 표시
-            if (isPremium && card.imageResId != null) {
-                Image(
-                    painter = painterResource(id = card.imageResId),
-                    contentDescription = card.name,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .then(if (card.isReversed) Modifier.rotate(180f) else Modifier),
-                    contentScale = ContentScale.Crop
+            // 프리미엄 모드: 나중에 이미지 추가할 예정
+            // 현재는 무료 버전과 동일하게 이모지 표시
+
+            // 왼쪽 위 모서리 숫자
+            Text(
+                text = card.number,
+                fontSize = numberSize,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF8B4513),
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(8.dp)
+            )
+
+            // 오른쪽 아래 모서리 숫자 (뒤집어서)
+            Text(
+                text = card.number,
+                fontSize = numberSize,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF8B4513),
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(8.dp)
+                    .rotate(180f)
+            )
+
+            // 중앙 - 거대한 타로카드 이모지
+            Column(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                // 타로카드 메인 이모지 (매우 크게)
+                Text(
+                    text = when(card.name) {
+                        "THE SUN" -> "☀️"
+                        "THE FOOL" -> "🃏"
+                        "THE MAGICIAN" -> "🧙‍♂️"
+                        "THE HIGH PRIESTESS" -> "🔮"
+                        "THE EMPRESS" -> "👸"
+                        "THE EMPEROR" -> "🤴"
+                        "THE HIEROPHANT" -> "⛪"
+                        "THE LOVERS" -> "💕"
+                        "THE CHARIOT" -> "🏇"
+                        "STRENGTH" -> "🦁"
+                        "THE HERMIT" -> "🔍"
+                        "WHEEL OF FORTUNE" -> "🎡"
+                        "JUSTICE" -> "⚖️"
+                        "THE HANGED MAN" -> "🙃"
+                        "DEATH" -> "💀"
+                        "TEMPERANCE" -> "👼"
+                        "THE DEVIL" -> "😈"
+                        "THE TOWER" -> "🏰"
+                        "THE STAR" -> "⭐"
+                        "THE MOON" -> "🌙"
+                        "JUDGEMENT" -> "📯"
+                        "THE WORLD" -> "🌍"
+                        else -> when {
+                            card.name.contains("KING") -> "👑"
+                            card.name.contains("QUEEN") -> "👸"
+                            card.name.contains("KNIGHT") -> "🏇"
+                            card.name.contains("PAGE") -> "📜"
+                            card.name.contains("CUPS") -> "🏆"
+                            card.name.contains("WANDS") -> "🔥"
+                            card.name.contains("SWORDS") -> "⚔️"
+                            card.name.contains("PENTACLES") -> "💰"
+                            else -> "🌟"
+                        }
+                    },
+                    fontSize = emojiSize,
+                    color = Color.Black,
+                    textAlign = TextAlign.Center,
+                    modifier = if (card.isReversed) Modifier.rotate(180f) else Modifier
                 )
 
-                // 유료 버전에서도 카드 이름은 표시
-                Column(
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .background(
-                            Color.Black.copy(alpha = 0.7f),
-                            RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)
-                        )
-                        .padding(8.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = card.name,
-                        fontSize = nameSize,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.White,
-                        textAlign = TextAlign.Center,
-                        maxLines = 2
-                    )
+                // 장식 무늬
+                Text(
+                    text = "✦ ❈ ✦",
+                    fontSize = if (large) 20.sp else 16.sp,
+                    color = Color(0xFF8B4513),
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
 
-                    if (card.isReversed) {
-                        Text(
-                            text = "REVERSED",
-                            fontSize = (nameSize.value - 2).sp,
-                            color = Color.Red,
-                            fontWeight = FontWeight.Bold
-                        )
+            // 하단 카드 이름
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = card.name,
+                    fontSize = nameSize,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF8B4513),
+                    textAlign = TextAlign.Center,
+                    maxLines = 2
+                )
+
+                if (card.isReversed) {
+                    Text(
+                        text = "REVERSED",
+                        fontSize = (nameSize.value - 2).sp,
+                        color = Color.Red,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun HistoryScreen(
+    history: List<TarotReading>,
+    onBack: () -> Unit,
+    onSelectHistory: (TarotReading) -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        // 뒤로가기 버튼
+        Button(
+            onClick = onBack,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF2a2d47),
+                contentColor = Color.White
+            ),
+            modifier = Modifier.padding(bottom = 16.dp)
+        ) {
+            Text("← 뒤로")
+        }
+
+        Text(
+            text = "📚 이전 기록 (최근 5번)",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color.White,
+            modifier = Modifier.padding(bottom = 24.dp)
+        )
+
+        if (history.isEmpty()) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "아직 뽑은 카드가 없습니다",
+                    color = Color.Gray,
+                    fontSize = 18.sp
+                )
+            }
+        } else {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(history.withIndex().toList()) { (index, reading) ->
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { onSelectHistory(reading) },
+                        colors = CardDefaults.cardColors(
+                            containerColor = Color(0xFF2a2d47)
+                        ),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(20.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(
+                                    text = "${index + 1}번째 - ${reading.cards.size}장",
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 16.sp
+                                )
+                                Text(
+                                    text = reading.timestamp,
+                                    color = Color.Gray,
+                                    fontSize = 14.sp
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            Text(
+                                text = "💭 ${reading.question}",
+                                color = Color(0xFFffd700),
+                                fontSize = 14.sp,
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
+
+                            Text(
+                                text = reading.cards.joinToString(" | ") {
+                                    "${it.emoji} ${it.name}${if (it.isReversed) " (역)" else ""}"
+                                },
+                                color = Color(0xFFcccccc),
+                                fontSize = 12.sp,
+                                lineHeight = 16.sp
+                            )
+                        }
                     }
                 }
-            } else {
-                // 무료 버전: 기존 이모지 방식
-                // 왼쪽 위 모서리 숫자
-                Text(
-                    text = card.number,
-                    fontSize = numberSize,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF8B4513),
-                    modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .padding(8.dp)
-                )
-
-                // 오른쪽 아래 모서리 숫자 (뒤집어서)
-                Text(
-                    text = card.number,
-                    fontSize = numberSize,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF8B4513),
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(8.dp)
-                        .rotate(180f)
-                )
-
-                // 중앙 - 거대한 타로카드 이모지
-                Column(
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .padding(16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    // 타로카드 메인 이모지 (매우 크게)
-                    Text(
-                        text = when(card.name) {
-                            "THE SUN" -> "☀️"
-                            "THE FOOL" -> "🃏"
-                            "THE MAGICIAN" -> "🧙‍♂️"
-                            "THE HIGH PRIESTESS" -> "🔮"
-                            "THE EMPRESS" -> "👸"
-                            "THE EMPEROR" -> "🤴"
-                            "THE HIEROPHANT" -> "⛪"
-                            "THE LOVERS" -> "💕"
-                            "THE CHARIOT" -> "🏇"
-                            "STRENGTH" -> "🦁"
-                            "THE HERMIT" -> "🔍"
-                            "WHEEL OF FORTUNE" -> "🎡"
-                            "JUSTICE" -> "⚖️"
-                            "THE HANGED MAN" -> "🙃"
-                            "DEATH" -> "💀"
-                            "TEMPERANCE" -> "
+            }
+        }
+    }
+}
