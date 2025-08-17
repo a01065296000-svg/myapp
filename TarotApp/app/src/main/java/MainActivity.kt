@@ -484,7 +484,7 @@ fun SingleCardLayout(card: TarotCard, isPremium: Boolean = false) {
 fun ThreeCardVerticalLayout(cards: List<TarotCard>, isPremium: Boolean = false) {
     // 세로로 3장 배치 (스크롤 가능)
     LazyColumn(
-        modifier = Modifier.fillMaxSize().offset(y = (-48).dp),
+        modifier = Modifier.fillMaxSize().offset(y = (-40).dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(16.dp)
