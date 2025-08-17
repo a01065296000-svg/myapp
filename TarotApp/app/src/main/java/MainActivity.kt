@@ -461,12 +461,12 @@ fun QuestionScreen(
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        text = if (isPremiumPurchased) "실제 타로카드 이미지" else "이모지 카드 (업그레이드 가능)",
+                        text = if (isPremiumPurchased) "실제 타로카드 이미지" else "(유료변경시  실제카드 이미지와같이 더정확한 해석)",
                         color = Color.Gray,
                         fontSize = 14.sp
                     )
                 }
-
+app-debug.aab
                 if (!isPremiumPurchased) {
                     Button(
                         onClick = onRequestPremium,
